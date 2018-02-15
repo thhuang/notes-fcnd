@@ -55,7 +55,6 @@ class BackyardFlyer(Drone):
         elif self.flight_state == States.WAYPOINT:
             # check if the distance to the target is within 0.5 m
             recent_position = self.local_position * [1, 1, -1]
-            print(recent_position, self.target_position)
             if np.linalg.norm(recent_position - self.target_position, ord=2) < 0.5:
                 # check if all_waypoints is not empty
                 if len(self.all_waypoints):
