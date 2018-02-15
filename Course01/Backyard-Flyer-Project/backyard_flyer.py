@@ -20,7 +20,7 @@ class States(Enum):
 
 class BackyardFlyer(Drone):
 
-    def __init__(self, connection):
+    def __init__(self, connection, route_size=10, route_altitude=3, waypoints_csv=None):
         super().__init__(connection)
         self.target_position = np.array([0.0, 0.0, 0.0])
         self.all_waypoints = []
@@ -29,6 +29,11 @@ class BackyardFlyer(Drone):
 
         # initial state
         self.flight_state = States.MANUAL
+
+        # set flying plan
+        if waypoints_csv == None:
+            self.route_size = route_size
+            self.route_altitude = route_altitude
 
         # register all callbacks
         self.register_callback(MsgID.LOCAL_POSITION, self.local_position_callback)
@@ -87,10 +92,12 @@ class BackyardFlyer(Drone):
         """
         Return waypoints to fly a box
         """
-        local_waypoints = [[10.0,  0.0, 3.0],
-                           [10.0, 10.0, 3.0],
-                           [ 0.0, 10.0, 3.0],
-                           [ 0.0,  0.0, 3.0]]
+        dist = self.route_size
+        height = self.route_altitude
+        local_waypoints = [[dist,  0.0, height],
+                           [dist, dist, height],
+                           [ 0.0, dist, height],
+                           [ 0.0,  0.0, height]]
         return local_waypoints
 
     def arming_transition(self):
@@ -187,12 +194,15 @@ class BackyardFlyer(Drone):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--port', type=int, default=5760, help='Port number')
-    parser.add_argument('--host', type=str, default='127.0.0.1', help="host address, i.e. '127.0.0.1'")
+    parser.add_argument('--port', help='Port number', type=int, default=5760)
+    parser.add_argument('--host', help='Host address, i.e. \'127.0.0.1\'', type=str, default='127.0.0.1')
+    parser.add_argument('--route_size', help='Size of the route', type=float, default=10)
+    parser.add_argument('--route_altitude', help='Height of the route', type=float, default=3)
+    parser.add_argument('--waypoints_csv', help='Path to the waypoints csv file', type=str, default=None)
     args = parser.parse_args()
 
-    conn = MavlinkConnection('tcp:{0}:{1}'.format(args.host, args.port), threaded=False, PX4=False)
+    connection = MavlinkConnection('tcp:{0}:{1}'.format(args.host, args.port), threaded=False, PX4=False)
     # conn = WebSocketConnection('ws://{0}:{1}'.format(args.host, args.port))
-    drone = BackyardFlyer(conn)
+    drone = BackyardFlyer(connection, args.route_size, args.route_altitude, args.waypoints_csv)
     time.sleep(2)
     drone.start()
