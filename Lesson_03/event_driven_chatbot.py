@@ -55,18 +55,17 @@ class EventDrivenChatBot:
             self.respond_to_age_request()
 
     def handle_message(self, message):
-        if message not in self.accepted_messages:
-            print("sorry, I don't understand", message)
-        else:
-            callbacks = self.accepted_messages[message]
-            for callback in callbacks:
-                callback()
+        default_respond = [lambda: print("Sorry, I don't understand...")]
+        callbacks = self.accepted_messages.get(message, default_respond)
+        for callback in callbacks:
+            callback()
 
 
 if __name__== '__main__':
     bot = EventDrivenChatBot()
     bot.handle_message("hi")
-    time.sleep(2.123)
+    bot.handle_message("Yo~")
+    time.sleep(2.345)
     bot.handle_message("age?")
     print("Let me ask you again...")
     bot.handle_message("age?")
