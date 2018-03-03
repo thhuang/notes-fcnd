@@ -22,5 +22,5 @@ python plot_trajectory.py --logfile Logs/TLog-manual.txt --output Logs/trajector
 python plot_trajectory.py --logfile Logs/TLog.txt --output Logstrajectory_autonomously_flying.png
 ```
 <div align='center'>
-<img src = 'Logstrajectory_autonomously_flying.png' height="400px">
+<img src = 'Logs/trajectory_autonomously_flying.png' height="400px">
 </div>
