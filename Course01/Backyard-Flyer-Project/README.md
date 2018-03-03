@@ -5,11 +5,7 @@
 ```bash
 python backyard_flyer.py --route_size 10 --route_altitude 3
 ```
-<div align='center'>
-    <a href='https://youtu.be/HIV8B7xQXEs'>
-        <img src='Logs/demo.gif' alt='Demo video. Click to go to YouTube!' height='400px'>
-    </a>
-</div>
+
 
 ## 2. Manually Flying Trajectory
 
