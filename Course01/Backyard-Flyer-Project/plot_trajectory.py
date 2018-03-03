@@ -16,6 +16,7 @@ time = t_log['MsgID.LOCAL_POSITION'][0][:]
 north = t_log['MsgID.LOCAL_POSITION'][1][:]
 east = t_log['MsgID.LOCAL_POSITION'][2][:]
 
+plt.figure(dpi=100)
 plt.plot(north, east)
 plt.xlabel('North (m)')
 plt.ylabel('Ease (m)')

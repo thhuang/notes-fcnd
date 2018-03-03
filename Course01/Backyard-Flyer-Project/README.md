@@ -13,7 +13,7 @@ python backyard_flyer.py --route_size 10 --route_altitude 3
 python plot_trajectory.py --logfile Logs/TLog-manual.txt --output Logs/trajectory_manually_flying.png
 ```
 <div align='center'>
-<img src = 'Logs/trajectory_manually_flying.png' height="200px">
+<img src = 'Logs/trajectory_manually_flying.png' height="400px">
 </div>
 
 ## 3. Autonomously Flying Trajectory
@@ -21,3 +21,6 @@ python plot_trajectory.py --logfile Logs/TLog-manual.txt --output Logs/trajector
 ```bash
 python plot_trajectory.py --logfile Logs/TLog.txt --output Logstrajectory_autonomously_flying.png
 ```
+<div align='center'>
+<img src = 'Logstrajectory_autonomously_flying.png' height="400px">
+</div>
