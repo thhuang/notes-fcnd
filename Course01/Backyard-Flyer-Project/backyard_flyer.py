@@ -40,11 +40,11 @@ class BackyardFlyer(Drone):
         self.register_callback(MsgID.LOCAL_VELOCITY, self.velocity_callback)
         self.register_callback(MsgID.STATE, self.state_callback)
 
-    def update_target_position(self, longitude, latitude, altitude):
-        self.target_position[0] = longitude
-        self.target_position[1] = latitude
+    def update_target_position(self, north, east, altitude):
+        self.target_position[0] = north
+        self.target_position[1] = east
         self.target_position[2] = altitude
-        print('>>> target position: ({:.2f}, {:.2f}, {:.2f})'.format(longitude, latitude, altitude))
+        print('>>> target position: ({:.2f}, {:.2f}, {:.2f})'.format(north, east, altitude))
 
     def local_position_callback(self):
         """
@@ -113,8 +113,8 @@ class BackyardFlyer(Drone):
         # arm the drone
         self.arm()
         # set the home location to the current position
-        self.set_home_position(self.global_position[0],  # longitude
-                               self.global_position[1],  # latitude
+        self.set_home_position(self.global_position[0],  # north
+                               self.global_position[1],  # east
                                self.global_position[2])  # altitude
         self.flight_state = States.ARMING
 
@@ -138,8 +138,8 @@ class BackyardFlyer(Drone):
         """
         print("waypoint transition")
         new_position = self.all_waypoints.pop(0)
-        self.update_target_position(new_position[0],  # longitude
-                                    new_position[1],  # latitude
+        self.update_target_position(new_position[0],  # north
+                                    new_position[1],  # east
                                     new_position[2])  # altitude
         self.cmd_position(self.target_position[0],
                           self.target_position[1],
