@@ -1,2 +1,5 @@
 #!/usr/bin/env bash
-jupyter notebook --no-browser --port=8765
+
+pip install --upgrade jupyterthemes
+jt -t monokai -T -N
+jupyter notebook --no-browser --allow-root --ip=0.0.0.0 &> /dev/null &
