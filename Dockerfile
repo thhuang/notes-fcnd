@@ -18,6 +18,9 @@ RUN cd /tmp/FCND-Term1-Starter-Kit && \
     conda env create -f environment.yml && \
     conda clean -tp
 
+RUN conda install -n fcnd scipy -y
+RUN conda install -n fcnd scikit-image -y
+
 WORKDIR /app
 COPY . /app/
 
