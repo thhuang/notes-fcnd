@@ -18,9 +18,11 @@ RUN cd /tmp/FCND-Term1-Starter-Kit && \
     conda env create -f environment.yml && \
     conda clean -tp
 
-RUN conda install -n fcnd scipy -y
-RUN conda install -n fcnd scikit-image -y
-RUN conda install -n fcnd -c conda-forge jupyterthemes -y
+RUN conda config --add channels conda-forge
+RUN conda install -n fcnd -y \
+        scikit-image \
+        scipy \
+        jupyterthemes
 
 RUN echo "source activate fcnd" >> ~/.bashrc
 RUN echo "jt -t monokai -T -N" >> ~/.bashrc
