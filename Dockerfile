@@ -20,6 +20,11 @@ RUN cd /tmp/FCND-Term1-Starter-Kit && \
 
 RUN conda install -n fcnd scipy -y
 RUN conda install -n fcnd scikit-image -y
+RUN conda install -n fcnd -c conda-forge jupyterthemes -y
+
+RUN echo "source activate fcnd" >> ~/.bashrc
+RUN echo "jt -t monokai -T -N" >> ~/.bashrc
+RUN echo "jupyter notebook --no-browser --allow-root --ip=0.0.0.0 &> /dev/null &" >> ~/.bashrc
 
 WORKDIR /app
 COPY . /app/
