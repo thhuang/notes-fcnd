@@ -20,6 +20,7 @@ RUN cd /tmp/FCND-Term1-Starter-Kit && \
 
 RUN conda config --add channels conda-forge
 RUN conda install -n fcnd -y \
+        networkx==2.1 \
         scikit-image \
         scipy \
         jupyterthemes
