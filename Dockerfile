@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
         vim \
         wget
 
-RUN conda update -n base conda
+RUN conda update -n base -y conda
 
 RUN cd /tmp && \
     git clone https://github.com/udacity/FCND-Term1-Starter-Kit.git
@@ -19,10 +19,12 @@ RUN cd /tmp/FCND-Term1-Starter-Kit && \
     conda clean -tp
 
 RUN conda config --add channels conda-forge
-RUN conda install -n fcnd -y \
+RUN conda update -n base -y conda && \
+    conda install -n fcnd -y \
         networkx==2.1 \
         scikit-image \
         scipy \
+        shapely \
         jupyterthemes
 
 RUN echo "source activate fcnd" >> ~/.bashrc
