@@ -21,11 +21,14 @@ RUN cd /tmp/FCND-Term1-Starter-Kit && \
 RUN conda config --add channels conda-forge
 RUN conda update -n base -y conda && \
     conda install -n fcnd -y \
+        jupyterthemes \
         networkx==2.1 \
         scikit-image \
+        scikit-learn \
         scipy \
         shapely \
-        jupyterthemes
+        tqdm
+
 
 RUN echo "source activate fcnd" >> ~/.bashrc
 RUN echo "jt -t monokai -T -N" >> ~/.bashrc
