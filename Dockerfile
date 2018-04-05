@@ -22,6 +22,7 @@ RUN conda config --add channels conda-forge
 RUN conda update -n base -y conda && \
     conda install -n fcnd -y \
         jupyterthemes \
+        msgpack-python \
         networkx==2.1 \
         scikit-image \
         scikit-learn \
