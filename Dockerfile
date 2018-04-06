@@ -24,6 +24,7 @@ RUN conda update -n base -y conda && \
         jupyterthemes \
         msgpack-python \
         networkx==2.1 \
+        pandas \
         scikit-image \
         scikit-learn \
         scipy \
