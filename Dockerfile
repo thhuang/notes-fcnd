@@ -31,6 +31,8 @@ RUN conda update -n base -y conda && \
         shapely \
         tqdm
 
+RUN /opt/conda/envs/fcnd/bin/pip install --upgrade pip
+RUN /opt/conda/envs/fcnd/bin/pip install jdc
 
 RUN echo "source activate fcnd" >> ~/.bashrc
 RUN echo "jt -t monokai -T -N" >> ~/.bashrc
