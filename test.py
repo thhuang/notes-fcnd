@@ -1,117 +1,82 @@
-# -*- coding: utf-8 -*-
-#
-#     ||          ____  _ __
-#  +------+      / __ )(_) /_______________ _____  ___
-#  | 0xBC |     / __  / / __/ ___/ ___/ __ `/_  / / _ \
-#  +------+    / /_/ / / /_/ /__/ /  / /_/ / / /_/  __/
-#   ||  ||    /_____/_/\__/\___/_/   \__,_/ /___/\___/
-#
-#  Copyright (C) 2014 Bitcraze AB
-#
-#  Crazyflie Nano Quadcopter Client
-#
-#  This program is free software; you can redistribute it and/or
-#  modify it under the terms of the GNU General Public License
-#  as published by the Free Software Foundation; either version 2
-#  of the License, or (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#  MA  02110-1301, USA.
 """
-Simple example that connects to the first Crazyflie found, ramps up/down
-the motors and disconnects.
+This script contains a keyboard controller using the MotionCommander.
+
+Info on API element used:
+https://github.com/bitcraze/crazyflie-lib-python/blob/master/cflib/positioning/motion_commander.py
 """
 import logging
-import time
-from threading import Thread
+from pynput import keyboard
 
-import cflib
-from cflib.crazyflie import Crazyflie
+import cflib.crtp
+from cflib.crazyflie.syncCrazyflie import SyncCrazyflie
+from cflib.positioning.motion_commander import MotionCommander
 
+URI = 'radio://0/80/2M'  # ENSURE THIS MATCHES YOUR CRAZYFLIE CONFIGURATION
+
+# Only output errors from the logging framework
 logging.basicConfig(level=logging.ERROR)
 
 
-class MotorRampExample:
-    """Example that connects to a Crazyflie and ramps the motors up/down and
-    the disconnects"""
+class KeyboardDrone:
 
-    def __init__(self, link_uri):
-        """ Initialize and run the example with the specified link_uri """
+    def __init__(self, mc):
+        self.mc = mc
 
-        self._cf = Crazyflie(rw_cache='./cache')
+        self.velocity = 0.75
+        self.ang_velocity = 120
 
-        self._cf.connected.add_callback(self._connected)
-        self._cf.disconnected.add_callback(self._disconnected)
-        self._cf.connection_failed.add_callback(self._connection_failed)
-        self._cf.connection_lost.add_callback(self._connection_lost)
+        self.sleeptime = 0.5
+        # self.max_hight = 0.8
+        # self.hight = 0.0
+        print('Press u for taking off!')
 
-        self._cf.open_link(link_uri)
+    def on_press(self, key):
 
-        print('Connecting to %s' % link_uri)
+        if key.char == 'w':
+            self.mc.start_forward(self.velocity)
 
-    def _connected(self, link_uri):
-        """ This callback is called form the Crazyflie API when a Crazyflie
-        has been connected and the TOCs have been downloaded."""
+        if key.char == 'u':
+            self.mc.take_off(0.3)
 
-        # Start a separate thread to do the motor test.
-        # Do not hijack the calling thread!
-        Thread(target=self._ramp_motors).start()
+        if key.char == 's':
+            self.mc.start_back(self.velocity)
 
-    def _connection_failed(self, link_uri, msg):
-        """Callback when connection initial connection fails (i.e no Crazyflie
-        at the specified address)"""
-        print('Connection to %s failed: %s' % (link_uri, msg))
+        if key.char == 'a':
+            self.mc.start_left(self.velocity)
 
-    def _connection_lost(self, link_uri, msg):
-        """Callback when disconnected after a connection has been made (i.e
-        Crazyflie moves out of range)"""
-        print('Connection to %s lost: %s' % (link_uri, msg))
+        if key.char == 'd':
+            self.mc.start_right(self.velocity)
 
-    def _disconnected(self, link_uri):
-        """Callback when the Crazyflie is disconnected (called in all cases)"""
-        print('Disconnected from %s' % link_uri)
+        if key.char == 'c':
+            self.mc.start_down(self.velocity)
 
-    def _ramp_motors(self):
-        thrust_mult = 1
-        thrust_step = 500
-        thrust = 20000
-        pitch = 0
-        roll = 0
-        yawrate = 0
+        if key == keyboard.Key.space:
+            self.mc.start_up(self.velocity)
 
-        # Unlock startup thrust protection
-        self._cf.commander.send_setpoint(0, 0, 0, 0)
+        if key.char == 'l':
+            print('Kill engines')
+            return False
 
-        while thrust >= 20000:
-            self._cf.commander.send_setpoint(roll, pitch, yawrate, thrust)
-            time.sleep(0.1)
-            if thrust >= 25000:
-                thrust_mult = -1
-            thrust += thrust_step * thrust_mult
-        self._cf.commander.send_setpoint(0, 0, 0, 0)
-        # Make sure that the last packet leaves before the link is closed
-        # since the message queue is not flushed before closing
-        time.sleep(0.1)
-        self._cf.close_link()
+        if key.char == 'q':
+            self.mc.start_turn_left(self.ang_velocity)
+
+        if key.char == 'e':
+            self.mc.start_turn_right(self.ang_velocity)
+
+    def on_release(self, key):
+        self.mc.stop()
 
 
 if __name__ == '__main__':
-    # Initialize the low-level drivers (don't list the debug drivers)
-    cflib.crtp.init_drivers(enable_debug_driver=False)
-    # Scan for Crazyflies and use the first one found
-    print('Scanning interfaces for Crazyflies...')
-    available = cflib.crtp.scan_interfaces()
-    print('Crazyflies found:')
-    for i in available:
-        print(i[0])
 
-    if len(available) > 0:
-        le = MotorRampExample(available[0][0])
-    else:
-        print('No Crazyflies found, cannot run example')
+    cflib.crtp.init_drivers(enable_debug_driver=False)
+
+    with SyncCrazyflie(URI) as scf:
+        # We take off when the commander is created
+        print('We take off when the commander is created')
+        mc = MotionCommander(scf)
+
+        drone = KeyboardDrone(mc)
+
+        with keyboard.Listener(on_press=drone.on_press, on_release=drone.on_release) as listener:
+            listener.join()
