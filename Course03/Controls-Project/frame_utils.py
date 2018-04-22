@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 
-def euler2RM(roll,pitch,yaw):
+def euler2RM(roll, pitch, yaw):
     R = np.array([[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]])
     cr = np.cos(roll)
     sr = np.sin(roll)
