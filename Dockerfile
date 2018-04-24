@@ -19,7 +19,7 @@ RUN cd /tmp/FCND-Term1-Starter-Kit && \
     conda clean -tp
 
 RUN conda config --add channels conda-forge
-RUN conda update -n fcnd -y conda && \
+RUN conda update -n root -y conda && \
     conda install -n fcnd -y \
         jupyterthemes \
         msgpack-python \
