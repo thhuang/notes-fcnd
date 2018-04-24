@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
         vim \
         wget
 
-RUN conda update -n base -y conda
+RUN conda update -n root -y conda
 
 RUN cd /tmp && \
     git clone https://github.com/udacity/FCND-Term1-Starter-Kit.git
@@ -19,7 +19,7 @@ RUN cd /tmp/FCND-Term1-Starter-Kit && \
     conda clean -tp
 
 RUN conda config --add channels conda-forge
-RUN conda update -n base -y conda && \
+RUN conda update -n fcnd -y conda && \
     conda install -n fcnd -y \
         jupyterthemes \
         msgpack-python \
