@@ -18,25 +18,18 @@ MAX_TORQUE = 1.0
 class NonlinearController(object):
 
     def __init__(self,
-                 delta_x=0.8, omega_n_x=1.6,
-                 delta_y=0.8, omega_n_y=1.6,
-                 delta_z=0.8, omega_n_z=3.5,
+                 k_p_x=2.5, k_p_y=2.5, k_p_z=12.0,
+                 k_d_x=2.5, k_d_y=2.5, k_d_z=5.0,
                  k_p_roll=1.9, k_p_pitch=1.9, k_p_yaw=0.0,
                  k_p_p=13.0, k_p_q=13.0, k_p_r=0.0):
 
         """Initialize the controller object and control gains"""
-        self.k_p_x = omega_n_x * omega_n_x
-        self.k_p_y = omega_n_y * omega_n_y
-        self.k_p_z = omega_n_z * omega_n_z
-        self.k_d_x = 2 * delta_x * omega_n_x
-        self.k_d_y = 2 * delta_y * omega_n_y
-        self.k_d_z = 2 * delta_z * omega_n_z
-        #self.k_p_x = 0.12
-        #self.k_p_y = 0.12
-        #self.k_p_z = 18.0
-        #self.k_d_x = 0.12
-        #self.k_d_y = 0.12
-        #self.k_d_z = 6.0
+        self.k_p_x = k_p_x
+        self.k_p_y = k_p_y
+        self.k_p_z = k_p_z
+        self.k_d_x = k_d_x
+        self.k_d_y = k_d_y
+        self.k_d_z = k_d_z
         self.k_p_roll = k_p_roll
         self.k_p_pitch = k_p_pitch
         self.k_p_yaw = k_p_yaw
@@ -44,9 +37,9 @@ class NonlinearController(object):
         self.k_p_q = k_p_q
         self.k_p_r = k_p_r
 
-        print('x: k_p={:.2f}, k_d={:.2f}'.format(self.k_p_x, self.k_d_x))
-        print('y: k_p={:.2f}, k_d={:.2f}'.format(self.k_p_y, self.k_d_y))
-        print('z: k_p={:.2f}, k_d={:.2f}'.format(self.k_p_z, self.k_d_z))
+        #print('x: k_p={:.2f}, k_d={:.2f}'.format(self.k_p_x, self.k_d_x))
+        #print('y: k_p={:.2f}, k_d={:.2f}'.format(self.k_p_y, self.k_d_y))
+        #print('z: k_p={:.2f}, k_d={:.2f}'.format(self.k_p_z, self.k_d_z))
 
 
     def trajectory_control(self, position_trajectory, yaw_trajectory, time_trajectory, current_time):
