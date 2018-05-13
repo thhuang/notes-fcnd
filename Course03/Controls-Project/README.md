@@ -6,7 +6,7 @@
 #### Body rate and roll/pitch control (scenario 2)
 - [X] Roll should less than 0.025 radian of nominal for 0.75 seconds (3/4 of the duration of the loop).
 - [X] Roll rate should less than 2.5 radian/sec for 0.75 seconds.
-1. Implement the code in the function `GenerateMotorCommands()`
+1. Implement the code in the function [`GenerateMotorCommands()`](https://github.com/thhuang/NOTES-FCND/blob/master/Course03/Controls-Project/C%2B%2B/src/QuadControl.cpp#L58-L104)
 2. Implement the code in the function `BodyRateControl()`
 3. Tune `Kp_pqr` in `QuadControlParams.txt` to get the vehicle to stop spinning quickly but not overshoot
 4. Implement the code in the function `RollPitchControl()`
