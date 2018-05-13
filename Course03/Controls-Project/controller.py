@@ -51,10 +51,10 @@ class PController(PIDController):
 
 class NonlinearController(object):
     def __init__(self,
-                 k_p_x=5.0, k_p_y=5.0, k_p_z=30.0,
-                 k_d_x=4.0, k_d_y=4.0, k_d_z=10.0,
-                 k_p_roll=7.0, k_p_pitch=7.0, k_p_yaw=3.0,
-                 k_p_p=20.0, k_p_q=20.0, k_p_r=5.0):
+                 k_p_x=5, k_p_y=5, k_p_z=25,
+                 k_d_x=4, k_d_y=4, k_d_z=10,
+                 k_p_roll=7, k_p_pitch=7, k_p_yaw=3,
+                 k_p_p=20, k_p_q=20, k_p_r=5):
 
         """Initialize the controller object and control gains"""
         # Lateral position controller (PD controller)
