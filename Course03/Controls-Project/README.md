@@ -1,5 +1,6 @@
 ## Project: Control of a 3D Quadrotor
 
+---
 ### Required Steps for a Passing Submission:
 - [X] scenario 2
 - [X] scenario 3
@@ -26,7 +27,7 @@
 #### Scenario 5
 - [X] Position error of the quad should be less than 0.25 meters for at least 3 seconds.
 
-
+---
 ### Python (Optional)
 
 #### 1. 
