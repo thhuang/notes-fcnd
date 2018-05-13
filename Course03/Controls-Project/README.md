@@ -38,5 +38,7 @@
 ### Python (Optional)
 
 <div align='center'>
-    <img src='Python/controller.gif' height='300px'">
+    <a href='https://youtu.be/3szuSbEx_OQ'>
+        <img src='Python/controller.gif' height='300px'">
+    </a>
 </div>
