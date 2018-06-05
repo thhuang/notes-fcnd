@@ -17,5 +17,5 @@ With section 7.3.2 of [Estimation for Quadrotors](https://www.overleaf.com/read/
 With section 7.3.1 of [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj#/54894644/) as a reference, Measurement model for GPS is implemented in [`UpdateFromGPS()`](https://github.com/thhuang/NOTES-FCND/blob/master/Course04/Estimation-Project/src/QuadEstimatorEKF.cpp#L285-L307).
 
 #### Step 6: Adding Your Controller
-[`QuadController.cpp`](https://github.com/thhuang/NOTES-FCND/blob/master/Course04/Estimation-Project/src/QuadControl.cpp) is replaced with the controller written in the [Controls-Project](https://github.com/thhuang/NOTES-FCND/tree/master/Course03/Controls-Project) with more constant added. Moreover, parameters for the controller in [`QuadControlParams.txt
+[`QuadController.cpp`](https://github.com/thhuang/NOTES-FCND/blob/master/Course04/Estimation-Project/src/QuadControl.cpp) is replaced with the controller written in the [Controls-Project](https://github.com/thhuang/NOTES-FCND/tree/master/Course03/Controls-Project) with more constants added. Moreover, parameters for the controller in [`QuadControlParams.txt
 `](https://github.com/thhuang/NOTES-FCND/blob/master/Course04/Estimation-Project/config/QuadControlParams.txt) are re-tuned to pass every scenario test.
